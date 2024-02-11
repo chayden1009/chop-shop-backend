@@ -8,9 +8,25 @@ router.get('/',
   middleware.verifyToken,
   carsCtrl.index
 )
-router.post('/', 
+
+router.get('/:id',
+  middleware.stripToken,
+  middleware.verifyToken,
+  carsCtrl.detail
+)
+
+router.post('/:id/issues', 
+  carsCtrl.addIssue,
+)
+
+
+router.post('/',
+  middleware.stripToken,
+  middleware.verifyToken,
   carsCtrl.create
 )
+
+
 
 
 
