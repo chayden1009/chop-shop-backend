@@ -16,11 +16,7 @@ const carSchema = new Schema (
         type: Schema.Types.ObjectId,
         ref: 'Issue'
       }
-    ],
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    ]
   }
 )
 

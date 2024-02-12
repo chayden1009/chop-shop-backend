@@ -5,8 +5,9 @@ const User = require('../models/User')
 
 const carsIndex = async (req, res, next) => {
   try {
-    const user = User.findById(req.user.id)
-    res.json(await user.populate('cars'))
+    const user = await User.findById(req.body.userID)
+    await user.populate('cars')
+    res.send(user.cars)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -15,7 +16,14 @@ const carsIndex = async (req, res, next) => {
 const createCar = async (req, res, next) => {
   try {
     const car = await Car.create({ ...req.body })
+    const user = await User.findById(req.body.user)
+    if (!user.cars) {
+      user.cars = []
+    }
+    await user.cars.push(car)
+    await user.save()
     res.send(car)
+    
   } catch (error) {
     throw error
   }
