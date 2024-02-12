@@ -5,7 +5,8 @@ const User = require('../models/User')
 
 const carsIndex = async (req, res, next) => {
   try {
-    res.json(await Car.find({}))
+    const user = User.findById(req.user.id)
+    res.json(await user.populate('cars'))
   } catch (error) {
     res.status(400).json(error)
   }
