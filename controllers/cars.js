@@ -5,11 +5,14 @@ const User = require('../models/User')
 
 const carsIndex = async (req, res, next) => {
   try {
-    const user = await User.findById(req.body.userID)
-    await user.populate('cars')
+    const { payload } = res.locals
+    const { id } = payload
+    const user = await User.findById(id)
+      .populate('cars')
+
     res.send(user.cars)
   } catch (error) {
-    res.status(400).json(error)
+    throw error
   }
 }
 
