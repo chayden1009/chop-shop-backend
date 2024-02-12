@@ -10,6 +10,7 @@ const app = express();
 
 app.use(logger('dev'))
 app.use(express.json())
+app.use(cors({ credentials: true }))
 
 const carsRouter = require('./routes/cars')
 const AuthRouter = require('./routes/AuthRouter')
