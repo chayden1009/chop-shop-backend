@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Car = require('../models/Car')
 const Issue = require('../models/Issue')
+const User = require('../models/User')
 
 const carsIndex = async (req, res, next) => {
   try {
