@@ -16,6 +16,18 @@ const carsIndex = async (req, res, next) => {
   }
 }
 
+
+const carDetail = async (req, res, next) => {
+  try {
+    const car = await Car.find({_id: req.params.id})
+    .populate('issues')
+    
+    res.send(car)
+  } catch (error) {
+    throw error
+  }
+}
+
 const createCar = async (req, res, next) => {
   try {
     const car = await Car.create({ ...req.body })
@@ -32,14 +44,13 @@ const createCar = async (req, res, next) => {
   }
 }
 
-const carDetail = async (req, res, next) => {
+const removeCar = async (req, res, next) => {
   try {
-    const car = await Car.find({_id: req.params.id})
-      .populate('issues')
-    
+    console.log(req.params.id)
+    const car = await Car.findOneAndDelete({_id: req.params.id})
     res.send(car)
   } catch (error) {
-    throw error
+    console.log(error)
   }
 }
 
@@ -65,4 +76,5 @@ module.exports = {
   create: createCar,
   detail: carDetail,
   addIssue,
+  delete: removeCar
 }

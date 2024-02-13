@@ -20,5 +20,23 @@ const carSchema = new Schema (
   }
 )
 
+carSchema.pre('deleteOne', async function() {
+  const doc = await this.model.findOne(this.getFilter());
+  const issues = []
+  doc.issues.map(issue => {
+    const issueString = issue.toString()
+    issues.push(issueString)
+  }) 
+  if (issues.length > 0) {
+    Issue.find({_id: {$in: issues}}).then(removedIssues => {
+      Promise.all(
+        removedIssues.map(issue => 
+          Issue.findOneAndDelete(issue._id)
+        )
+      )
+    })
+  }
+})
+
 
 module.exports = mongoose.model('Car', carSchema)

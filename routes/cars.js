@@ -26,6 +26,12 @@ router.post('/',
   carsCtrl.create
 )
 
+router.delete('/:id', 
+  middleware.stripToken,
+  middleware.verifyToken,
+  carsCtrl.delete
+)
+
 
 
 
