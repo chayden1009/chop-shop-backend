@@ -28,7 +28,7 @@ carSchema.pre('deleteOne', async function() {
     issues.push(issueString)
   }) 
   if (issues.length > 0) {
-    Issue.find({_id: {$in: issues}}).then(removedIssues => {
+    Issue.find({_id: {$in: doc.issues}}).then(removedIssues => {
       Promise.all(
         removedIssues.map(issue => 
           Issue.findOneAndDelete(issue._id)

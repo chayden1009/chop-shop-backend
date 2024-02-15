@@ -70,11 +70,27 @@ const addIssue = async (req, res, next) => {
   }
 }
 
+const resolveIssue = async(req, res, next) => {
+  try {
+    const issue = await Issue.findById(req.params.issueId)
+    if (issue.resolved) {
+      issue.resolved = false
+    } else if (!issue.resolved) {
+      issue.resolved = true
+    }
+    issue.save()
+    res.send(issue)
+  } catch(error) {
+    throw error
+  }
+}
+
 
 module.exports = {
   index: carsIndex,
   create: createCar,
   detail: carDetail,
   addIssue,
-  delete: removeCar
+  delete: removeCar,
+  resolveIssue
 }

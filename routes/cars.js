@@ -16,7 +16,15 @@ router.get('/:id',
 )
 
 router.post('/:id/issues', 
-  carsCtrl.addIssue,
+  middleware.stripToken,
+  middleware.verifyToken,
+  carsCtrl.addIssue
+)
+
+router.put('/:carId/issues/:issueId',
+  middleware.stripToken,
+  middleware.verifyToken,
+  carsCtrl.resolveIssue
 )
 
 
